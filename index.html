@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Scaling Javascript: The growing pains of a jQuery app</title>
+
+		<meta name="description" content="Front-end scaling challenges and how we're addressing them at Refinery29">
+		<meta name="author" content="Laima Tazmin">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<section>
+					<h2>Scaling Javascript:</h2>
+					<h3>The growing pains of a jQuery app</h3>
+					<p><br/></p>
+					<p>Laima Tazmin<br/>Platform Engineer<br/>Refinery29</p>
+					<p><a href="mailto:laima.tazmin@refinery29.com">laima.tazmin@refinery29.com</a></p>
+				</section>
+
+				<section>
+					<h2>Refinery29</h2>
+					<h3>Publishing Platform</h3>
+				</section>
+				
+				<section>
+					<h2>Content APIs</h2>
+					<a href="http://www.refinery29.com"><img src="img/slideshow.png"></a>
+				</section>
+				
+				<section>
+					<h2>Dash - In-house CMS</h2>
+					<a href="http://www.refinery29.com"><img src="img/dash.png"></a>
+				</section>
+				
+				<section>
+					<h2>Story Editor</h2>
+					<p>(Asset Editor)</p>
+				</section>
+				
+				<section>
+					<h2>How things are</h2>
+					<ul>
+						<li>Single page app</li>
+						<li>Lots of DOM manipulation</li>
+						<li>AJAX calls to backend</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Sounds innocent enough</h2>
+					<img class="stretch" src="img/first-app-big.png"/>
+				</section>
+				
+				<section>
+					<h2>Except, reality:</h2>
+					<img class="stretch" src="img/monstrosity-big.png"/>
+				</section>
+				
+				<section>
+					<img class="stretch" src="img/runaway.gif"/>
+				</section>
+				
+				<section>
+					<h2>How does this happen?</h2>
+					<ol>
+						<li>Product wants a new button</li>
+						<li>Create the button and its click listener</li>
+						<li>Add variables to keep track of state where convenient</li>
+						<li>Place new JS somewhere in the existing code</li>
+						<li>Repeat</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>What's wrong with it though?</h2>
+					<ul>
+						<li>Global namespace</li>
+						<li>Implicit dependencies</li>
+						<li>View is the Model</li>
+						<li>Spaghetti code</li>
+						<li>Prone to error</li>
+					</ul>
+				</section>
+				
+				<section>
+					<img class="stretch" src="img/scared.gif"/>
+				</section>
+				
+				<section>
+					<h2>Refactor</h2>
+					<ul>
+						<li>Javascript design patterns</li>
+						<li>Asynchronous module definition (AMD)</li>
+						<li>MV* architecture</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Modularize All the Things</h2>
+				</section>
+				
+				<section>
+					<h2>Revealing module pattern</h2>
+					<img class="stretch" src="img/module-big.png"/>
+				</section>
+				
+				<section>
+					<h2>Revealing module pattern</h2>
+					<ul>
+						<li>Encapsulated, focused logic</li>
+						<li>Private and public access</li>
+						<li>Testable</li>
+						<li>Scales easily</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>AMD - RequireJS</h2>
+					<img class="stretch" src="img/require-module-big.png"/>
+				</section>
+				
+				<section>
+					<h2>AMD - RequireJS</h2>
+					<img class="stretch" src="img/require-app-big.png"/>
+				</section>
+				
+				<section>
+					<h2>AMD - RequireJS</h2>
+					<ul>
+						<li>Explicit, stated dependencies</li>
+						<li>Nested dependencies</li>
+						<li>Scales easily</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>MV* Architecture</h2>
+					<ul>
+						<li>Model is a "Story" or "Asset"</li>
+						<li>View is a part of the Editor UI</li>
+						<li>Controller/Mediator/*</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Bring it together</h2>
+					<img class="stretch" src="img/finale-app-big.png"/>
+				</section>
+				
+				<section>
+					<h2>Much better!</h2>
+					<img class="stretch" src="img/finale-big.png"/>
+				</section>
+				
+				<section>
+					<img class="stretch" src="img/clapping.gif"/>
+				</section>
+
+				<section>
+					<h2>We're not done though</h2>
+					<ul>
+						<li>Unit testing</li>
+						<li>Pub-sub communication</li>
+						<li>jQuery?</li>
+						<li>Framework?</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Resources</h2>
+					<ul>
+						<li><a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/">Javascript Design Patterns</a></li>
+						<li><a href="http://requirejs.org/docs/whyamd.html">RequireJS - Why AMD?</a></li>
+						<li><a href="http://addyosmani.com/largescalejavascript/">Large scale Javascript Apps</a></li>
+						<li><a href="https://speakerdeck.com/addyosmani/large-scale-javascript-application-architecture">Large scale Javascript Apps (Deck)</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<img class="stretch" src="img/wonderfulstory.gif"/>
+				</section>
+				
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+				backgroundTransition: 'slide',
+				
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
